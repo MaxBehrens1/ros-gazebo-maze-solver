@@ -903,7 +903,7 @@
     <state world_name='default'>
       <sim_time>0 0</sim_time>
       <real_time>0 0</real_time>
-      <wall_time>1720018850 139658711</wall_time>
+      <wall_time>1720025227 734298064</wall_time>
       <iterations>0</iterations>
       <model name='brick_box_3x1x3'>
         <pose>2.49743 1.37008 0 0 -0 0</pose>
@@ -936,10 +936,10 @@
         </link>
       </model>
       <model name='brick_box_3x1x3_0_clone_clone'>
-        <pose>-0.324892 -1.50322 0 0 -0 0</pose>
+        <pose>-0.203536 -1.5037 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='chassis'>
-          <pose>-0.324892 -1.50322 1.5 0 -0 0</pose>
+          <pose>-0.203536 -1.5037 1.5 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -956,10 +956,10 @@
         </link>
       </model>
       <model name='brick_box_3x1x3_0_clone_clone_0_clone'>
-        <pose>-3.45243 -4.53273 0 0 -0 0</pose>
+        <pose>-3.39156 -4.50261 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='chassis'>
-          <pose>-3.45243 -4.53273 1.5 0 -0 0</pose>
+          <pose>-3.39156 -4.50261 1.5 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -986,10 +986,10 @@
         </link>
       </model>
       <model name='brick_box_3x1x3_2'>
-        <pose>6.448 -0.58176 0 0 0 -1.58301</pose>
+        <pose>6.46587 -0.189706 0 0 -0 1.56689</pose>
         <scale>1 1 1</scale>
         <link name='chassis'>
-          <pose>6.448 -0.58176 1.5 0 0 -1.58301</pose>
+          <pose>6.46587 -0.189706 1.5 0 -0 1.56689</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -1101,7 +1101,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>0.128231 -0.943514 26.4346 0 1.5698 -0.003807</pose>
+        <pose>4.50585 -1.15044 14.9392 0 1.5698 -0.003807</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
