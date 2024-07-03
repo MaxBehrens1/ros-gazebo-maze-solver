@@ -8,27 +8,30 @@ import numpy as np
 
 class basic_closed_loop(Node):
 
+    open('src/robot_controller/data/position_data.txt', 'w').close() #to clear file contents
+    positions = open('src/robot_controller/data/position_data.txt', 'a')
+
     def __init__(self):
         super().__init__('basic_closed_loop')
         self.get_logger().info('New node running: basic_closed_loop')
         self.pose_subscriber = self.create_subscription(
             Odometry, '/odom', self.pose_callback, 10)
         self.cmd_vel_publisher = self.create_publisher(
-            Twist, '/cmd_vel', 10)
+            Twist, '/cmd_vel', 10) 
+               
 
-        
     def pose_callback(self, odom: Odometry):
         cmd = Twist()
         final_pos = np.array([1,-2])
         rel_vec_to_pos = np.array([final_pos[0] - odom.pose.pose.position.x, final_pos[1] - odom.pose.pose.position.y])
         dist_to_final_pos = np.sqrt(np.dot(rel_vec_to_pos, rel_vec_to_pos))
+        current_bearing = np.arctan2(2 * odom.pose.pose.orientation.w * odom.pose.pose.orientation.z,
+                                      1 - 2 * odom.pose.pose.orientation.z * odom.pose.pose.orientation.z)
 
         if rel_vec_to_pos[1] > 0:
             bearing_to_final_pos = np.arccos(np.dot([1,0], rel_vec_to_pos / dist_to_final_pos))
         else:
             bearing_to_final_pos = 2*np.pi - np.arccos(np.dot([1,0], rel_vec_to_pos / dist_to_final_pos)) 
-        current_bearing = np.arctan2(2 * odom.pose.pose.orientation.w * odom.pose.pose.orientation.z,
-                                      1 - 2 * odom.pose.pose.orientation.z * odom.pose.pose.orientation.z)
         if current_bearing < 0:
             current_bearing += 2 * np.pi
 
@@ -41,7 +44,7 @@ class basic_closed_loop(Node):
         else:
             cmd.linear.x = 0.0
             cmd.angular.z = 0.0
-
+        self.positions.write(f'{odom.pose.pose.position.x}, {odom.pose.pose.position.y} \n')
         self.cmd_vel_publisher.publish(cmd)
         
         
@@ -49,6 +52,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = basic_closed_loop()
     rclpy.spin(node)
+    node.positions.close()
     rclpy.shutdown()
 
 if __name__ == '__main__':
