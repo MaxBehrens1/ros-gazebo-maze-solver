@@ -23,7 +23,8 @@ setup(
     entry_points={
         'console_scripts': [
             'pub_vel = robot_controller.pub_vel:main',
-            'basic_closed_loop = robot_controller.basic_closed_loop:main'
+            'basic_closed_loop = robot_controller.basic_closed_loop:main',
+            'lidar_control = robot_controller.lidar_control:main'
         ],
     },
 )

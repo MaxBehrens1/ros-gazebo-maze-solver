@@ -9,6 +9,8 @@
 
   <depend>rclpy</depend>
   <depend>geometry_msgs.msg</depend>
+  <depend>sensor_msgs.msg</depend>
+  <depend>numpy</depend>
 
   <exec_depend>ros2launch</exec_depend>
 

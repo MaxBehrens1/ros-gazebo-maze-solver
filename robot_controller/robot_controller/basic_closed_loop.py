@@ -4,7 +4,7 @@ from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 import numpy as np
 
-#All breaing are wrt the x-axis going anti-clockwise
+#All bearings have the x-axis as N, and go anti-clockwise
 
 class basic_closed_loop(Node):
 
