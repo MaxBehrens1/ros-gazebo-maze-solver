@@ -24,7 +24,8 @@ setup(
         'console_scripts': [
             'pub_vel = robot_controller.pub_vel:main',
             'basic_closed_loop = robot_controller.basic_closed_loop:main',
-            'lidar_control = robot_controller.lidar_control:main'
+            'lidar_control = robot_controller.lidar_control:main',
+            'left_hand_strategy = robot_controller.left_hand_strategy:main'
         ],
     },
 )

@@ -19,7 +19,7 @@
     <link name="base_link"></link>
 
     <xacro:property name="width" value="0.5"/>
-    <xacro:property name="length" value="1.0"/>
+    <xacro:property name="length" value="0.5"/>
     <xacro:property name="height" value="0.25"/>
     <xacro:property name="wheel_radius" value="0.1"/>
     <xacro:property name="wheel_length" value="0.05"/>

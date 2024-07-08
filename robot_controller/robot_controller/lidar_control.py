@@ -7,8 +7,11 @@ import numpy as np
 
 class lidar_control(Node):
 
+    open('src/robot_controller/data/position_data.txt', 'w').close() #to clear file contents
+    positions = open('src/robot_controller/data/position_data.txt', 'a')
+
     def __init__(self):
-        super().__init__('basic_closed_loop')
+        super().__init__('lidar_control')
         self.get_logger().info('New node running: lidar_control')
         self.laser_subscriber = self.create_subscription(
             LaserScan, '/scan', self.laser_callback, 10)
@@ -22,7 +25,6 @@ class lidar_control(Node):
 
     def laser_callback(self, laser: LaserScan):
         msg = Twist()
-        # dist = [laser.ranges[270], laser.ranges[180], laser.ranges[90]] #left, front, right
         dist_front = laser.ranges[180]
         dist_left = laser.ranges[270]
         dist_right = laser.ranges[90]
@@ -38,7 +40,7 @@ class lidar_control(Node):
                 if self.final_bearing > 2*np.pi:
                     self.final_bearing -= 2*np.pi
                 self.turning = True
-            if np.isclose(self.odometry[2], self.final_bearing, atol=0.001) == False:
+            if np.isclose(self.odometry[2], self.final_bearing, atol=0.005) == False:
                 msg.angular.z = -0.02
                 msg.linear.x = 0.0
             else:
@@ -54,11 +56,13 @@ class lidar_control(Node):
         if current_bearing < 0:
             current_bearing += 2 * np.pi
         self.odometry = [odom.pose.pose.position.x, odom.pose.pose.position.y, current_bearing]
+        self.positions.write(f'{self.odometry[0]}, {self.odometry[1]} \n')
 
 def main(args=None):
     rclpy.init(args=args)
     node = lidar_control()
     rclpy.spin(node)
+    node.positions.close()
     rclpy.shutdown()
 
 if __name__ == "__main__":
