@@ -40,20 +40,28 @@ class left_hand_strategy(Node):
         
     def move_forward(self, pos):
         msg = Twist()
-        dist_to_final_pos = np.sqrt((pos[0] - self.odometry[0])**2 + (pos[1] - self.odometry[1])**2)
-        if np.isclose(dist_to_final_pos, 0, atol=0.05) == False:
-            msg.linear.x = 0.1
-            self.cmd_vel_publisher.publish(msg)
+        if np.isclose(self.odometry[2], 0, atol=0.5) or np.isclose(self.odometry[2], 2*np.pi, atol=0.5) or np.isclose(self.odometry[2], np.pi, atol=0.5):
+            if np.isclose(self.odometry[0], pos[0], atol = 0.05) == False:
+                msg.linear.x = 0.2
+                self.cmd_vel_publisher.publish(msg)
+            else:
+                msg.linear.x = 0.0
+                self.cmd_vel_publisher.publish(msg)
+                self.start_distance = True
         else:
-            msg.linear.x = 0.0
-            self.cmd_vel_publisher.publish(msg)
-            self.start_distance = True
+            if np.isclose(self.odometry[1], pos[1], atol=0.05) == False:
+                msg.linear.x = 0.2
+                self.cmd_vel_publisher.publish(msg)
+            else:
+                msg.linear.x = 0.0
+                self.cmd_vel_publisher.publish(msg)
+                self.start_distance = True
 
     def turn(self, angle, direction = 1):
         msg = Twist()
         current_bearing = self.odometry[2]
-        if np.isclose(current_bearing, angle, atol=0.005)== False and np.isclose(current_bearing, angle + 2*np.pi, atol=0.005) == False and np.isclose(current_bearing, angle - 2*np.pi, atol=0.005) == False:
-            msg.angular.z = direction * 0.01
+        if np.isclose(current_bearing, angle, atol=0.01)== False and np.isclose(current_bearing, angle + 2*np.pi, atol=0.005) == False and np.isclose(current_bearing, angle - 2*np.pi, atol=0.005) == False:
+            msg.angular.z = direction * 0.05
             self.cmd_vel_publisher.publish(msg)
             self.finish_turn = False
         else:  
@@ -86,8 +94,6 @@ class left_hand_strategy(Node):
             else:
                 self.dist_right = [False, dist_right[1]]
             self.get_logger().info(f'Left:{self.dist_left}, Right:{self.dist_right}, Front:{self.dist_front}')
-            
-            
 
         #Going along wall
         if self.dist_front == True and self.dist_left[0] == False:
@@ -102,9 +108,6 @@ class left_hand_strategy(Node):
                     self.final_pos += np.array([-1, 0])
                 else:
                     self.final_pos += np.array([0,-1])
-                #to make it integer
-                for i in range(2):
-                    self.final_pos[i] = np.round(self.final_pos[i])
                 self.start_forward = False
             self.move_forward(self.final_pos)
         
@@ -130,9 +133,6 @@ class left_hand_strategy(Node):
                         self.final_pos += np.array([-2, 0])
                     else:
                         self.final_pos += np.array([0,-2])
-                    #to make it integer
-                    for i in range(2):
-                        self.final_pos[i] = np.round(self.final_pos[i])
                     self.start_forward = False
                 self.move_forward(self.final_pos)
         
@@ -172,9 +172,6 @@ class left_hand_strategy(Node):
                         self.final_pos += np.array([-2, 0])
                     else:
                         self.final_pos += np.array([0,-2])
-                    #to make it integer
-                    for i in range(2):
-                        self.final_pos[i] = np.round(self.final_pos[i])
                     self.start_forward = False
                 self.move_forward(self.final_pos)
 
