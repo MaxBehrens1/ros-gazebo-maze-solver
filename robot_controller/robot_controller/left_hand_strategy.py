@@ -61,7 +61,7 @@ class left_hand_strategy(Node):
         msg = Twist()
         current_bearing = self.odometry[2]
         if np.isclose(current_bearing, angle, atol=0.01)== False and np.isclose(current_bearing, angle + 2*np.pi, atol=0.005) == False and np.isclose(current_bearing, angle - 2*np.pi, atol=0.005) == False:
-            msg.angular.z = direction * 0.05
+            msg.angular.z = direction * 0.02    
             self.cmd_vel_publisher.publish(msg)
             self.finish_turn = False
         else:  
