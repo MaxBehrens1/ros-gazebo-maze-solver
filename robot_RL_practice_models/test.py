@@ -3,7 +3,7 @@
 import gym
 import torch
 
-policy_nn = torch.load('src/robot_RL/mountaincar_dqn.pth')
+policy_nn = torch.load('src/robot_RL/models/mountaincar_dqn.pth')
 env = gym.make("MountainCar-v0", render_mode="human")
 
 def select_action(state):

@@ -1,4 +1,4 @@
-'''Inital create for cartpole
+'''DQN training
 '''
 import gym 
 import torch
@@ -23,7 +23,7 @@ states, info = env.reset()
 n_observations = len(states)
 
 
-# paramteres
+# hyperparamteres
 batch_size = 512 # number of transitions sampled from replay buffer
 gamma = 0.99 # discount factor
 eps_start = 0.9 # starting value of epsilon
@@ -148,14 +148,7 @@ for i_episode in tqdm(range(no_episodes)):
             '''Saves the model'''
             # if len(eps_lengths) > 1:
             #     if t+1 <= min(eps_lengths):
-            #         torch.save(policy_nn, 'src/robot_RL/taxi_dqn.pth')
+            #         torch.save(policy_nn, 'src/robot_RL/models/taxi_dqn.pth')
             eps_lengths.append(t+1)
             break
 
-
-eps_lengths = np.array(eps_lengths)
-eps_lengths = np.mean(eps_lengths.reshape(-1, 2), axis = 1)
-plt.plot(eps_lengths)
-plt.xlabel('Episode')
-plt.ylabel('Duration')
-plt.show()
