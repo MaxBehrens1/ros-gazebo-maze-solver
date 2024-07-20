@@ -17,7 +17,7 @@ from collections import namedtuple, deque
 '''
 
 # setting up environment
-env = gym.make('CartPole-v1', render_mode='human')
+env = gym.make('MountainCar-v0', render_mode='human')
 n_actions = env.action_space.n 
 states, info = env.reset()
 n_observations = len(states)

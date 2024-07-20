@@ -4,7 +4,6 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 import numpy as np
-from odom_laser_sub import odom_laser_sub
 
 class left_hand_strategy(Node):
 
