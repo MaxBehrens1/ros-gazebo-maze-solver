@@ -9,7 +9,7 @@ def launch():
     return sim
 
 # to take observations reading
-def obs(sub):
+def observe(sub):
     for _ in range(2):
         rclpy.spin_once(sub)
     return sub.observation()
@@ -21,13 +21,32 @@ def reset(simulation, sub):
     '''
     end_sim(simulation)
     env = launch()
-    time.sleep(1)
-    observation = obs(sub)
-    return env, observation
-
-
+    time.sleep(10)
+    observation = observe(sub)
+    return observation, env
 
 def end_sim(sim):
     sim.send_signal(SIGINT)
     sim.wait(timeout=30)
+
+def step(action, pub, sub):
+    '''Function to take 1 step in the simulation
+    '''
+    if action == 0:
+        pub.forward()
+    elif action == 1:
+        pub.backward()
+    elif action == 2:
+        pub.left()
+    elif action == 3:
+        pub.right()
+    obs = observe(sub)
+    if obs[0] < 7:
+        rew = 1
+        terminated = False
+    else:
+        rew = 0
+        terminated = True
+    truncated = False
+    return obs, rew, terminated, truncated
 
